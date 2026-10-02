@@ -21,6 +21,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::931814980669:role/GitHubActions-Deployment-Role
           aws-region: eu-north-1
+          role-session-name: GitHubActionsSession
 
       - name: Test AWS Connection
         run: |
