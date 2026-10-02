@@ -1,0 +1,27 @@
+name: Deploy to AWS via OIDC
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write   # OIDC JWT token generate karne ke liye compulsory hai
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::931814980669:role/GitHubActions-Deployment-Role
+          aws-region: eu-north-1
+
+      - name: Test AWS Connection
+        run: |
+          aws s3 ls
